@@ -24,18 +24,17 @@ def load_neos(neo_csv_path):
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    neo_list = []
-    with open(neo_csv_path) as csvfile:
-        reader = csv.DictReader(csvfile)
-        for idx, line in enumerate(reader):
-            if idx == 0:
-                continue
+    neos_list = []
+    with open(neo_csv_path) as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)
+        for line in csv_reader:
             try:
                 neo = NearEarthObject(line[3], line[4], line[15], line[7])
-                neo_list.append(neo)
-            except Exception as e:
-                print(f"Error processing NEO: {e}")
-    return neo_list
+                neos_list.append(neo)
+            except IndexError as e:
+                print(f"Error processing load neos: {e}")
+    return neos_list
 
 
 def load_approaches(cad_json_path):
@@ -44,10 +43,13 @@ def load_approaches(cad_json_path):
     :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    rs = []
-    with open(cad_json_path) as fi:
-        data = json.load(fi)
+    approaches_list = []
+    with open(cad_json_path) as json_file:
+        data = json.load(json_file)
         for line in data['data']:
-            cad = CloseApproach(line[0], line[3], line[4], line[7])
-            rs.append(cad)
-    return rs
+            try:
+                approach = CloseApproach(line[0], line[3], line[4], line[7])
+                approaches_list.append(approach)
+            except Exception as e:
+                print(f"Error processing load approaches: {e}")
+    return approaches_list
