@@ -70,36 +70,112 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Return a string representation of the AttributeFilter."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
 class DistanceFilter(AttributeFilter):
+    """
+    A filter for nominal approach distance.
+
+    This filter compares the nominal approach distance of a close approach to a
+    reference value using a specified comparator operator.
+
+    Inherits from `AttributeFilter`.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the nominal approach distance from a close approach.
+
+        :param approach: A `CloseApproach` object.
+        :return: The nominal approach distance.
+        """
         return approach.distance
 
 
 class DiameterFilter(AttributeFilter):
+    """
+    A filter for the diameter of the NEO.
+
+    This filter compares the diameter of the NEO associated with a close approach
+    to a reference value using a specified comparator operator.
+
+    Inherits from `AttributeFilter`.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the diameter of the NEO associated with a close approach.
+
+        :param approach: A `CloseApproach` object.
+        :return: The diameter of the NEO.
+        """
         return approach.neo.diameter
 
 
 class VelocityFilter(AttributeFilter):
+    """
+    A filter for the relative approach velocity.
+
+    This filter compares the relative approach velocity of a close approach to a
+    reference value using a specified comparator operator.
+
+    Inherits from `AttributeFilter`.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the relative approach velocity from a close approach.
+
+        :param approach: A `CloseApproach` object.
+        :return: The relative approach velocity.
+        """
         return approach.velocity
 
 
 class DateFilter(AttributeFilter):
+    """
+    A filter for the date of a close approach.
+
+    This filter compares the date of a close approach to a reference value using
+    a specified comparator operator.
+
+    Inherits from `AttributeFilter`.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the date of a close approach.
+
+        :param approach: A `CloseApproach` object.
+        :return: The date of the close approach.
+        """
         return approach.time.date()
 
 
 class HazardousFilter(AttributeFilter):
+    """
+    A filter for determining if a NEO is potentially hazardous.
+
+    This filter compares the hazardous flag of a NEO associated with a close approach
+    to a reference value using a specified comparator operator.
+
+    Inherits from `AttributeFilter`.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the hazardous flag of the NEO associated with a close approach.
+
+        :param approach: A `CloseApproach` object.
+        :return: The hazardous flag of the NEO.
+        """
         return approach.neo.hazardous
 
 
